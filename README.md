@@ -48,6 +48,16 @@ docker-compose exec web python manage.py createsuperuser
 docker-compose exec web python manage.py collectstatic --no-input
 ```
 
+Заполнение бд из файла фикстур:
+```
+docker exec -it %container_id%  python manage.py shell
+>>> from django.contrib.contenttypes.models import ContentType
+>>> ContentType.objects.all().delete()
+>>> quit()
+
+docker-compose exec web python manage.py loaddata fixtures.json
+```
+
 Проверьте работоспособность приложения, для этого перейдите на страницу:
 
 ```
