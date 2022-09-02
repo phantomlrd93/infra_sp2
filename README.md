@@ -33,9 +33,49 @@ python3 manage.py migrate
 
 Запустить проект:
 
+Перейти в папку infra и запустить docker-compose.yaml
+(при установленном и запущенном Docker)
 ```
-python3 manage.py runserver
+cd infra_sp2/infra
+docker-compose up
 ```
+
+Для пересборки контейнеров выполнять команду:
+(находясь в папке infra, при запущенном Docker)
+```
+docker-compose up -d --build
+```
+
+В контейнере web выполнить миграции:
+
+```
+docker-compose exec web python manage.py migrate
+```
+
+Создать суперпользователя:
+
+```
+docker-compose exec web python manage.py createsuperuser
+```
+
+Собрать статику:
+
+```
+docker-compose exec web python manage.py collectstatic --no-input
+```
+
+Проверьте работоспособность приложения, для этого перейдите на страницу:
+
+```
+ http://localhost/admin/
+```
+
+***Документация*** (запросы для работа с API):
+
+```
+ http://localhost/redoc/
+```
+
 # Примеры запросов
 
 Регистрация нового пользователя:
